@@ -1,0 +1,156 @@
+package com.zipcodewilmington.phonebook;
+
+import java.util.*;
+
+/**
+ * Created by leon on 1/23/18.
+ */
+public class PhoneBook { // Class signature
+
+    private String name; // Instance variable
+    private ArrayList<String> arrayNumbers; // Instance variable
+
+    TreeMap<String, ArrayList<String>> directory; // Instance Object
+
+
+    public PhoneBook(){
+        this.arrayNumbers = new ArrayList<String>();
+        this.directory = new TreeMap<String, ArrayList<String>>();
+    }
+
+    // Adds an entry to the composite associate data type
+    public void add(String name, String number) { // Method signature (SETTER)
+        String message = "";
+        if( directory.size() > 0 ){
+//            System.out.println( "xx" + directory.entrySet() );
+            ArrayList<String> flattenNumbers = flattenCollection(directory.values());
+            System.out.println( "Name: " + name + " Number: "+ number + " " +  flattenNumbers + "--->" + flattenNumbers.contains(number));
+            if ( !flattenNumbers.contains(number) ){
+                if (!directory.containsKey(name)) { // If is NOT registered.
+//                    System.out.println("1. " + directory.entrySet());
+                    message += String.format("User %s created with %s.", name, number);
+
+                    //arrayNumbers.clear();
+//                    System.out.println("2. " + directory.entrySet() + " --- " + number + " ------ " );
+//                    System.out.println("3. " + directory.entrySet() + " --- " + number + " ------ " );
+                    ArrayList arr2 = (ArrayList)arrayNumbers.clone();
+                    arr2.add(number);
+                    arr2.remove(0);
+//                    System.out.println("4. " + arrayNumbers + " - " + number);
+//                    System.out.println("5. " + directory.entrySet() );
+                    directory.put(name, arr2 );
+                    System.out.println("6. " + directory.entrySet() );
+                } else {
+                    System.out.println( "B. Name:" + name + " " + directory.entrySet() + "-" + !directory.get(name).contains(number) );
+                    if (!directory.get(name).contains(number)) {  // If is NOT contains number
+                        System.out.println("ENTRO: " + name + " " + number);
+                        System.out.println("1." + directory.entrySet() + "---" + directory.get(name) + " arrayNumbers:" + arrayNumbers);
+                        ArrayList arr2 = (ArrayList)arrayNumbers.clone();
+                        //arrayNumbers.clear();
+//                        directory.get(name)
+//                        arrayNumbers.add(directory.get(name));
+                        System.out.println("2." + directory.entrySet() + " arrayNumbers:" + arrayNumbers + " arr2:" + arr2 );
+                        //message += String.format("User %s already defined and updated with %s.", name, number);
+                        //arrayNumbers.add(number);
+                        arr2.add(number);
+                        System.out.println("3." + directory.entrySet() + " arrayNumbers:" + arrayNumbers + " arr2:" + arr2 );
+                        directory.put(name,arr2);
+                        System.out.println("4." + directory.entrySet() + " arrayNumbers:" + arrayNumbers + " arr2:" + arr2 );
+                        //directory.put(name, (ArrayList<String>) arrayNumbers.clone());
+                        System.out.println("B.6. " + directory.entrySet() );
+                    } else {
+                        message += String.format("User %s already defined and you want to duplicated with %s.", name, number);
+                    }
+                }
+            }
+        }
+        else {
+            arrayNumbers.add(number);
+            directory.put(name, arrayNumbers );
+        }
+    }
+
+    // Removes an entry to the composite associate data type
+    public void remove(String name){ // Method signature (SETTER)
+        if(directory.size() > 0){
+            directory.remove(name);
+        }
+    }
+
+    // Returns a phone number for the respective input name
+    public ArrayList<String> lookup(String name){ // Method signature (GETTER)
+        if(directory.size() > 0){
+            return directory.get(name);
+        }
+        return null;
+    }
+
+    // Returns a name for the respective input phoneNumber
+    public String reverseLookup(String number){ // Method signature (GETTER)
+        if(directory.size() > 0){
+            for ( Map.Entry s: directory.entrySet() ) {
+                if( ((ArrayList<String>)s.getValue()).contains(number) ){
+                    return s.getKey().toString();
+                }
+            }
+        }
+      return null;
+    }
+
+
+    // Print a human-readable list of all entries (names and phone numbers) in alphabetical order.
+    public String display(){ // Method signature (GETTER)
+        String container = "";
+        for ( Map.Entry s : directory.entrySet() ) {
+            container += s.getKey() + " " + String.join(",", (ArrayList<String>)s.getValue() ) + "\n" ;
+        }
+        return container;
+    }
+
+    public ArrayList<String> flattenCollection( Collection collection ){
+        ArrayList<String> container = new ArrayList<String>();
+        for (int i = 0; i < collection.size(); i++) {
+            ArrayList<String> xx = (ArrayList<String>)collection.toArray()[i];
+            for (int j = 0; j < xx.size(); j++) {
+                container.add( xx.get(j) );
+            }
+        }
+        return container;
+    }
+
+    public static void main(String[] args) {
+
+//        PhoneBook phoneBook = new PhoneBook();
+//        phoneBook.add("aa","11");
+//        phoneBook.add("aa","33");
+//        phoneBook.add("cc","11");
+//        phoneBook.add("cc","22");
+//        phoneBook.add("dd","44");
+//        phoneBook.add("ff","55");
+//
+//        System.out.println( phoneBook.directory.entrySet() );
+//        phoneBook.remove( "cc" );
+//        System.out.println( phoneBook.directory.entrySet() );
+//        System.out.println("lookup: "+ phoneBook.lookup("aa"));;
+//        System.out.println( "ReverseLookup: " + phoneBook.reverseLookup("33"));
+//        System.out.println( "---" );
+//        System.out.println( phoneBook.display() );
+
+        PhoneBook phoneBook = new PhoneBook();
+        phoneBook.add("Zebra", "111-222-333");
+        System.out.println("Exp. 1. " + phoneBook.directory.entrySet());
+        phoneBook.add("Dog", "222-444-4444");
+        System.out.println("Exp. 2. " + phoneBook.directory.entrySet());
+        phoneBook.add("Dog", "222-444-5555");
+        System.out.println("Exp. 3. " + phoneBook.directory.entrySet());
+        phoneBook.add("Dog", "222-444-6666");
+        System.out.println("Exp. 4. " + phoneBook.directory.entrySet());
+//
+        System.out.println(phoneBook.directory.entrySet());
+//        System.out.println(phoneBook.display());
+
+
+
+    }
+
+}

@@ -1,0 +1,104 @@
+package com.zipcodewilmington.phonebook;
+
+import java.util.*;
+
+/**
+ * Created by leon on 1/23/18.
+ */
+public class PhoneBook { // Class signature
+
+    private String name; // Instance variable
+    private ArrayList<String> arrayNumbers; // Instance variable
+
+    TreeMap<String, ArrayList<String>> directory; // Instance Object
+
+
+    public PhoneBook(){
+        this.arrayNumbers = new ArrayList<String>();
+        this.directory = new TreeMap<String, ArrayList<String>>();
+    }
+
+    // Adds an entry to the composite associate data type
+    public void add(String name, String number) { // Method signature (SETTER)
+        if (!directory.containsKey(name)) {
+            arrayNumbers.clear();
+            System.out.print("New user! " + directory.entrySet() + "______");
+            arrayNumbers.add(number);
+            directory.put(name, (ArrayList<String>) arrayNumbers.clone());
+        } else {
+            System.out.print("User already defined! " + directory.entrySet() + "______");
+            if(directory.get(name).contains(number)){
+                System.out.println("Also number has been defined");
+            }
+            else {
+                System.out.println("+++" + directory.get(name) + directory.get(name).contains(number));
+                arrayNumbers.add(number);
+                directory.put(name, (ArrayList<String>) arrayNumbers.clone());
+            }
+        }
+        System.out.println( " -> " + directory.entrySet() );
+    }
+
+    // Removes an entry to the composite associate data type
+    public void remove(String name){ // Method signature (SETTER)
+
+    }
+
+    // Returns a phone number for the respective input name
+//    public String lookup(String name){ // Method signature (GETTER)
+//        System.out.println( name + " - fromLookup: " + directory.get(name)  );
+//        return this.number;
+//    }
+
+    // Returns a name for the respective input phoneNumber
+    public String reverseLookup(String number){ // Method signature (GETTER)
+        System.out.println(directory.size());
+        for( Map.Entry s : directory.entrySet() ){
+            System.out.println(s.getValue() + " " + s.getKey());
+            if (s.getValue() == number ){
+                System.out.println( number + " - reverseLookup: " + s.getKey() );
+                break;
+            }
+        }
+        return this.name;
+    }
+
+    // Print a human-readable list of all entries (names and phone numbers) in alphabetical order.
+    public void display(){ // Method signature (GETTER)
+
+    }
+
+
+    public static void main(String[] args) {
+
+        PhoneBook phoneBook = new PhoneBook();
+        System.out.println("name: aa" + " number: " + "11");
+        phoneBook.add("aa","11");
+        phoneBook.add("aa","22");
+        phoneBook.add("aa","33");
+        phoneBook.add("bb","11");
+        phoneBook.add("cc","22");
+        phoneBook.add("bb","55");
+        phoneBook.add("aa","11");
+
+        System.out.println();
+        System.out.println(phoneBook.directory.entrySet());
+//        phoneBook.add("bb","22");
+//        phoneBook.everyThing();
+//        phoneBook.lookup("aa");
+//        phoneBook.reverseLookup("11");
+
+
+//        Set set = directory.entrySet();
+//        Iterator itr = set.iterator();
+//        while(itr.hasNext()) {
+//            Map.Entry mm = (Map.Entry)itr.next();
+//            System.out.println( mm.getValue() + " " + mm.getKey());
+//        }
+
+
+        //System.out.println( phoneBook.lookup("aa") );
+        //System.out.println( phoneBook.reverseLookup("11") );
+    }
+
+}

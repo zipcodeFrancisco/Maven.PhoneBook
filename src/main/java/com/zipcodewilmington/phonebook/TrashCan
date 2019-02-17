@@ -1,0 +1,20 @@
+
+
+
+       PhoneBook phoneBook = new PhoneBook();
+        phoneBook.add("Dog", "111-222-333");
+        System.out.println("  Exp. 1. " + phoneBook.directory.entrySet());
+        phoneBook.add("zebra", "222-444-4444");
+        System.out.println("  Exp. 2. " + phoneBook.directory.entrySet());
+        phoneBook.add("Aaa", "222-444-5555");
+        System.out.println("  Exp. 3. " + phoneBook.directory.entrySet());
+        System.out.println( phoneBook.lookup("Dog"));
+        System.out.println( phoneBook.reverseLookup("222-444-4444"));
+//
+        System.out.println("-------------");
+        System.out.println(phoneBook.directory.entrySet());
+        System.out.println("-------------");
+        System.out.println(phoneBook.display());
+        System.out.println("-------------");
+        phoneBook.directory.remove("Dog");
+        System.out.println(phoneBook.display());
